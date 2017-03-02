@@ -214,6 +214,40 @@ class BaseCart(object):
         """
         self.update()
 
+    def auto(self, pk, quantity, **kwargs):
+        """Automatically proxies to the correct action depending on quantity.
+
+        If item in cart :
+          If quantity == 0 : => RemoveItem
+          If quantity > 0 : => ChangeItemQuantity    
+        If item not in cart:
+          If quantity == 0 : => Nothing happens
+          If quantity > 0 : => AddItem 
+
+        Parameters
+        ----------
+        pk : str or int
+            The primary key of the item.
+        quantity : int-convertible
+            A number of units to set.
+        **kwargs
+            Extra keyword arguments to pass to the item class
+            constructor.
+
+        """
+        pk = str(pk)
+        if pk in self.items:
+            if quantity == 0:
+                return self.remove(pk, **kwargs)
+            else:
+                return self.change_quantity(pk, quantity, **kwargs)
+        else:
+            if quantity == 0:
+                pass
+            else:
+                return self.add(pk, quantity, **kwargs)
+
+
     def add(self, pk, quantity=1, **kwargs):
         """Add an item to the cart.
 
