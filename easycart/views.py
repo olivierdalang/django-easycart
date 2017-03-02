@@ -37,6 +37,7 @@ __all__ = [
     'AddItem',
     'RemoveItem',
     'ChangeItemQuantity',
+    'AutoUpdateItem',
     'EmptyCart',
 ]
 
@@ -136,6 +137,18 @@ class RemoveItem(CartView):
     action = 'remove'
     required_params = ('pk',)
 
+class AutoUpdateItem(CartView):
+    """Automatically chooses the correct action depending on quantity.
+
+    If item in cart :
+      If quantity == 0 : => RemoveItem
+      If quantity > 0 : => ChangeItemQuantity    
+    If item not in cart:
+      If quantity == 0 : => Nothing happens
+      If quantity > 0 : => AddItem  
+    """
+    action = 'auto'
+    required_params = ('pk','quantity',)
 
 class EmptyCart(CartView):
     """Remove all items from the cart."""
