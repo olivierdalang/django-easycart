@@ -237,16 +237,15 @@ class BaseCart(object):
         """
         pk = str(pk)
         if pk in self.items:
-            if quantity == 0:
-                return self.remove(pk, **kwargs)
-            else:
+            if quantity:
                 return self.change_quantity(pk, quantity, **kwargs)
-        else:
-            if quantity == 0:
-                pass
             else:
+                return self.remove(pk, **kwargs)
+        else:
+            if quantity:
                 return self.add(pk, quantity, **kwargs)
-
+            else:
+                pass
 
     def add(self, pk, quantity=1, **kwargs):
         """Add an item to the cart.
