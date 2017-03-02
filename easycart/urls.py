@@ -5,6 +5,7 @@ from easycart.views import (
     AddItem,
     RemoveItem,
     ChangeItemQuantity,
+    AutoUpdateItem,
     EmptyCart,
 )
 
@@ -14,5 +15,7 @@ urlpatterns = [
     url(r'^remove/$', RemoveItem.as_view(), name='cart-remove'),
     url(r'^change-quantity/$', ChangeItemQuantity.as_view(),
         name='cart-change-quantity'),
+    url(r'^auto-update/$', AutoUpdateItem.as_view(),
+        name='cart-auto-update'),
     url(r'^empty/$', EmptyCart.as_view(), name='cart-empty'),
 ]
